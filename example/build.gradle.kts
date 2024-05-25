@@ -1,8 +1,9 @@
 plugins {
     java
-    id("com.ncorti.kotlin.gradle.template.plugin")
+    id("fr.hadaly.gradle.openapidiff")
 }
 
-templateExampleConfig {
-    message.set("Just trying this gradle plugin...")
+openapiDiff {
+    source = "petstore.yaml"
+    from = "1.0.0"
 }

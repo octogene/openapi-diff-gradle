@@ -1,4 +1,4 @@
-package com.ncorti.kotlin.gradle.template.plugin
+package fr.hadaly.gradle.openapidiff
 
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -8,7 +8,7 @@ import javax.inject.Inject
 const val DEFAULT_OUTPUT_FILE = "template-example.txt"
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class TemplateExtension
+abstract class OpenAPIDiffExtension
     @Inject
     constructor(project: Project) {
         private val objects = project.objects
@@ -25,4 +25,8 @@ abstract class TemplateExtension
             objects.fileProperty().convention(
                 project.layout.buildDirectory.file(DEFAULT_OUTPUT_FILE),
             )
+
+        val from: Property<String> = objects.property(String::class.java)
+
+        val source: Property<String> = objects.property(String::class.java)
     }

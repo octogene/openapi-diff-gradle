@@ -1,7 +1,9 @@
 [versions]
 detekt = "1.23.6"
-kotlin = "1.9.23"
+jgit = "6.9.0.202403050737-r"
+kotlin = "1.9.24"
 ktlintGradle = "12.1.0"
+openapidiff = "2.1.0-beta.11"
 pluginPublish = "1.2.1"
 versionCheck = "0.51.0"
 
@@ -14,3 +16,5 @@ versionCheck = { id = "com.github.ben-manes.versions", version.ref = "versionChe
 
 [libraries]
 junit = "junit:junit:4.13.2"
+openapidiff = { module = "org.openapitools.openapidiff:openapi-diff-core", version.ref = "openapidiff" }
+jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
