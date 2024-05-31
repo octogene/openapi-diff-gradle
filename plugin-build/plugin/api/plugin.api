@@ -1,0 +1,51 @@
+public abstract class dev/octogene/openapidiff/GenerateDiffTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getBaseFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getDiffFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSection ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTargetFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract class dev/octogene/openapidiff/GitFileRetrieverTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getFilePath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getTag ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class dev/octogene/openapidiff/OpenAPIDiffExtension {
+	public fun <init> (Lorg/gradle/api/Project;)V
+	public final fun getBaseFile ()Lorg/gradle/api/provider/Property;
+	public final fun getBaseTag ()Lorg/gradle/api/provider/Property;
+	public final fun getOutputFile ()Lorg/gradle/api/provider/Property;
+	public final fun getSection ()Lorg/gradle/api/provider/Property;
+	public final fun getTargetFile ()Lorg/gradle/api/provider/Property;
+	public final fun getTargetTag ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class dev/octogene/openapidiff/OpenAPIDiffPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public abstract class dev/octogene/openapidiff/PatchOpenAPIDiffTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getDiffFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSection ()Lorg/gradle/api/provider/Property;
+}
+
+public final class dev/octogene/openapidiff/TextFileWriter {
+	public static final field Companion Ldev/octogene/openapidiff/TextFileWriter$Companion;
+	public fun <init> (Lorg/slf4j/Logger;)V
+	public final fun writeAt (Ljava/lang/String;Ljava/io/File;Ljava/lang/String;)V
+}
+
+public final class dev/octogene/openapidiff/TextFileWriter$Companion {
+}
+

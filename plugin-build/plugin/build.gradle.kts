@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm")
     `java-gradle-plugin`
     alias(libs.plugins.pluginPublish)
+    alias(libs.plugins.bcv)
 }
 
 dependencies {
@@ -12,17 +13,22 @@ dependencies {
     implementation(libs.openapidiff)
     implementation(libs.jgit)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.kotest)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_17.toString()
+        }
+    }
+    withType<Test>().configureEach {
+        useJUnitPlatform()
     }
 }
 
@@ -34,7 +40,7 @@ gradlePlugin {
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
-            tags.set(listOf("plugin", "gradle", "sample", "template"))
+            tags.set(listOf("plugin", "gradle", "openapi", "changelog", "git"))
         }
     }
 }

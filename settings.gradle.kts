@@ -13,15 +13,14 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    `gradle-enterprise`
+    id("com.gradle.develocity") version "3.17.5"
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(System.getenv("GITHUB_ACTIONS") == "true")
-        publishOnFailure()
+        publishing.onlyIf {
+            it.buildResult.failures.isNotEmpty() && !System.getenv("CI").isNullOrEmpty()
+        }
     }
 }
 

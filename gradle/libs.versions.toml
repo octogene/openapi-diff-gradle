@@ -1,20 +1,33 @@
 [versions]
+bcv = "0.16.3"
+changelog = "2.2.1"
 detekt = "1.23.6"
+develocity = "3.17.5"
 jgit = "6.9.0.202403050737-r"
-kotlin = "1.9.24"
+kotest = "5.9.1"
+kotlin = "1.9.25"
 ktlintGradle = "12.1.0"
 openapidiff = "2.1.0-beta.11"
 pluginPublish = "1.2.1"
+semver = "0.7.0"
 versionCheck = "0.51.0"
+violations = "2.1.0"
 
 [plugins]
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle"}
-pluginPublish = { id = "com.gradle.plugin-publish", version.ref = "pluginPublish"}
-versionCheck = { id = "com.github.ben-manes.versions", version.ref = "versionCheck"}
+bcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "bcv" }
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+develocity = { id = "com.gradle.develocity", version.ref = "develocity" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
+pluginPublish = { id = "com.gradle.plugin-publish", version.ref = "pluginPublish" }
+semver = { id = "com.javiersc.semver", version.ref = "semver" }
+versionCheck = { id = "com.github.ben-manes.versions", version.ref = "versionCheck" }
+violations = { id = "se.bjurr.violations.violations-gradle-plugin", version.ref = "violations" }
+
 
 [libraries]
-junit = "junit:junit:4.13.2"
-openapidiff = { module = "org.openapitools.openapidiff:openapi-diff-core", version.ref = "openapidiff" }
+detekt-formating = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
+kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+openapidiff = { module = "org.openapitools.openapidiff:openapi-diff-core", version.ref = "openapidiff" }

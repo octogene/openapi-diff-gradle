@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.pluginPublish) apply false
     alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.versionCheck)
+    alias(libs.plugins.semver)
 }
 
 allprojects {
@@ -14,36 +14,39 @@ allprojects {
 
     apply {
         plugin(rootProject.libs.plugins.detekt.get().pluginId)
-        plugin(rootProject.libs.plugins.ktlint.get().pluginId)
-    }
-
-    ktlint {
-        debug.set(false)
-        verbose.set(true)
-        android.set(false)
-        outputToConsole.set(true)
-        ignoreFailures.set(false)
-        enableExperimentalRules.set(true)
-        filter {
-            exclude("**/generated/**")
-            include("**/kotlin/**")
-        }
     }
 
     detekt {
+        baseline = rootProject.file("../config/detekt/baseline.xml")
         config.setFrom(rootProject.files("../config/detekt/detekt.yml"))
+        buildUponDefaultConfig = true
     }
 }
 
-tasks.withType<Detekt>().configureEach {
+tasks {
+    withType<Detekt>().configureEach {
+        baseline = file("config/detekt/baseline.xml")
+        reports {
+            html.required.set(true)
+            html.outputLocation.set(file("build/reports/detekt.html"))
+        }
+    }
+}
+
+tasks.register<Detekt>("detektFormat") {
+    description = "Runs over whole code base without the starting overhead for each module."
+    parallel = true
+    autoCorrect = true
+    setSource(files(projectDir))
+    include("**/*.kt")
+    include("**/*.kts")
+    exclude("**/resources/**")
+    exclude("**/build/**")
     reports {
-        html.required.set(true)
-        html.outputLocation.set(file("build/reports/detekt.html"))
+        xml.required = false
+        html.required = false
+        txt.required = true
     }
-}
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.layout.buildDirectory)
 }
 
 tasks.wrapper {

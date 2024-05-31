@@ -4,38 +4,30 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.versionCheck)
 }
 
 subprojects {
     apply {
         plugin(rootProject.libs.plugins.detekt.get().pluginId)
-        plugin(rootProject.libs.plugins.ktlint.get().pluginId)
-    }
-
-    ktlint {
-        debug.set(false)
-        verbose.set(true)
-        android.set(false)
-        outputToConsole.set(true)
-        ignoreFailures.set(false)
-        enableExperimentalRules.set(true)
-        filter {
-            exclude("**/generated/**")
-            include("**/kotlin/**")
-        }
     }
 
     detekt {
         config.setFrom(rootProject.files("config/detekt/detekt.yml"))
     }
+
+    dependencies {
+        detekt(rootProject.libs.detekt.formating)
+    }
 }
 
 tasks.withType<Detekt>().configureEach {
+    baseline.set(file("config/detekt/baseline.xml"))
     reports {
         html.required.set(true)
+        txt.required.set(true)
         html.outputLocation.set(file("build/reports/detekt.html"))
+        txt.outputLocation.set(file("build/reports/detekt.txt"))
     }
 }
 
@@ -54,8 +46,24 @@ tasks.register("clean", Delete::class.java) {
 tasks.register("reformatAll") {
     description = "Reformat all the Kotlin Code"
 
-    dependsOn("ktlintFormat")
-    dependsOn(gradle.includedBuild("plugin-build").task(":plugin:ktlintFormat"))
+    dependsOn("detektFormat")
+    dependsOn(gradle.includedBuild("plugin-build").task(":plugin:detektFormat"))
+}
+
+tasks.register<Detekt>("detektFormat") {
+    description = "Runs over whole code base without the starting overhead for each module."
+    parallel = true
+    autoCorrect = true
+    setSource(files(projectDir))
+    include("**/*.kt")
+    include("**/*.kts")
+    exclude("**/resources/**")
+    exclude("**/build/**")
+    reports {
+        xml.required = false
+        html.required = false
+        txt.required = true
+    }
 }
 
 tasks.register("preMerge") {
@@ -64,6 +72,7 @@ tasks.register("preMerge") {
     dependsOn(":example:check")
     dependsOn(gradle.includedBuild("plugin-build").task(":plugin:check"))
     dependsOn(gradle.includedBuild("plugin-build").task(":plugin:validatePlugins"))
+    dependsOn(gradle.includedBuild("plugin-build").task(":plugin:apiCheck"))
 }
 
 tasks.wrapper {

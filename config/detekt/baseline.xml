@@ -1,0 +1,7 @@
+<SmellBaseline>
+    <ManuallySuppressedIssues>
+        <ID>ReturnCount:TextFileWriter.kt$TextFileWriter$private fun String.startsWithAtMost(char: Char, max: Int): Boolean</ID>
+    </ManuallySuppressedIssues>
+    <CurrentIssues>
+    </CurrentIssues>
+</SmellBaseline>
