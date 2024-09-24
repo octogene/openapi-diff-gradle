@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.changelog.date
 
 plugins {
     alias(libs.plugins.kotlin) apply false
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.versionCheck)
     alias(libs.plugins.semver)
+    alias(libs.plugins.changelog)
 }
 
 allprojects {
@@ -52,3 +54,17 @@ tasks.register<Detekt>("detektFormat") {
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
+
+changelog {
+    version.set(property("VERSION").toString())
+    path.set(rootProject.file("../CHANGELOG.md").canonicalPath)
+    header.set(provider { "[${version.get()}] - ${date()}" })
+    headerParserRegex.set("""(\d+\.\d+.\d+)""".toRegex())
+    itemPrefix.set("-")
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
+    lineSeparator.set("\n")
+    combinePreReleases.set(true)
+}
+
