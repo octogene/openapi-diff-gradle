@@ -2,7 +2,7 @@
 bcv = "0.16.3"
 changelog = "2.2.1"
 detekt = "1.23.6"
-develocity = "3.17.5"
+develocity = "3.18.1"
 jgit = "6.9.0.202403050737-r"
 kotest = "5.9.1"
 kotlin = "1.9.25"
